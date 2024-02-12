@@ -19,3 +19,15 @@ Based on the user's claim on the forum, we can conclude that all we would logica
 Hidden Process Diagram:
 ---
 ![diagram2](http://i159.photobucket.com/albums/t141/sovietweasel/plist2.jpg)
+
+I should probably mention that if you want to reverse this process, you should restore the original `Blink` and `Flink` pointers. You can achieve this by saving the original pointer contents to a storage medium, such as a JSON file, and then restoring based on that.
+
+--- 
+
+```py
+p_list_procs = ListEntry.from_address(self.e_process_address + self.u_flink_offset)
+p_list_procs.Blink, p_list_procs.Flink = (
+  ctypes.c_void_p(self.original_pointers["Blink"]),
+  ctypes.c_void_p(self.original_pointers["Flink"]),
+)
+```
